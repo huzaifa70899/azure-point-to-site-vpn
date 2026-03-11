@@ -1,6 +1,5 @@
-##############Step 1 — Create a Resource Group
 
-First, create a resource group to organize all resources related to the VPN lab.
+### 1. Create a Resource Group
 
 Navigate to:
 
@@ -8,14 +7,14 @@ Azure Portal → Resource Groups → Create
 
 Configuration:
 
-Resource Group Name: RG-Azure-VPN-Lab
-Region: Canada Central
+- Resource Group Name: **RG-Azure-VPN-Lab**
+- Region: **Canada Central**
 
-Click Review + Create, then Create.
+Click **Review + Create**, then **Create**.
 
-###############Step 2 — Create the Virtual Network
+---
 
-Next, create a Virtual Network that will host internal resources.
+### 2. Create the Virtual Network
 
 Navigate to:
 
@@ -23,32 +22,37 @@ Azure Portal → Virtual Networks → Create
 
 Configuration:
 
-Name: VNet-VPN-Lab
-Region: Canada Central
-Address Space: 10.1.0.0/16
-Subnet Name: default
-Subnet Address Range: 10.1.1.0/24
+- Name: **VNet-VPN-Lab**
+- Region: **Canada Central**
+- Address Space: **10.1.0.0/16**
 
-Click Review + Create, then Create.
+Create the default subnet:
 
-################Step 3 — Create the Gateway Subnet
+- Subnet Name: **default**
+- Subnet Address Range: **10.1.1.0/24**
 
-A VPN Gateway requires a dedicated subnet called GatewaySubnet.
+Click **Review + Create**, then **Create**.
+
+---
+
+### 3. Create the Gateway Subnet
+
+The VPN Gateway requires a dedicated subnet called **GatewaySubnet**.
 
 Navigate to:
 
--Virtual Network → Subnets → Add
+Virtual Network → Subnets → Add
 
 Configuration:
 
-Subnet Name: GatewaySubnet
-Address Range: 10.1.255.0/27
+- Subnet Name: **GatewaySubnet**
+- Address Range: **10.1.255.0/27**
 
-Save the configuration.
+Click **Save**.
 
-##################Step 4 — Create a Public IP Address
+---
 
-The VPN Gateway requires a public IP address to allow remote connections.
+### 4. Create a Public IP Address
 
 Navigate to:
 
@@ -56,14 +60,16 @@ Azure Portal → Public IP Addresses → Create
 
 Configuration:
 
-Name: VPNGateway-PublicIP
-SKU: Standard
-Assignment: Static
-Region: Canada Central
+- Name: **VPNGateway-PublicIP**
+- SKU: **Standard**
+- Assignment: **Static**
+- Region: **Canada Central**
 
-##################Step 5 — Deploy the VPN Gateway
+Click **Review + Create**, then **Create**.
 
-Now create the Azure VPN Gateway that will handle secure VPN connections.
+---
+
+### 5. Deploy the VPN Gateway
 
 Navigate to:
 
@@ -71,20 +77,22 @@ Azure Portal → Virtual Network Gateway → Create
 
 Configuration:
 
-Name: VPNGateway-Lab
-Region: Canada Central
-Gateway Type: VPN
-VPN Type: Route-Based
-SKU: VpnGw1
-Generation: Generation1
-Virtual Network: VNet-VPN-Lab
-Public IP Address: VPNGateway-PublicIP
+- Name: **VPNGateway-Lab**
+- Region: **Canada Central**
+- Gateway Type: **VPN**
+- VPN Type: **Route-Based**
+- SKU: **VpnGw1**
+- Generation: **Generation1**
+- Virtual Network: **VNet-VPN-Lab**
+- Public IP Address: **VPNGateway-PublicIP**
 
-Click Review + Create, then Create.
+Click **Review + Create**, then **Create**.
 
-####################Step 6 — Configure Point-to-Site VPN
+Deployment typically takes **30–45 minutes**.
 
-After the VPN Gateway has been deployed, configure the Point-to-Site VPN settings.
+---
+
+### 6. Configure Point-to-Site VPN
 
 Navigate to:
 
@@ -92,18 +100,15 @@ VPN Gateway → Point-to-site configuration
 
 Configuration:
 
-Address Pool: 172.16.0.0/24
-Tunnel Type: OpenVPN (SSL)
-Authentication Type: Azure Certificate
+- Address Pool: **172.16.0.0/24**
+- Tunnel Type: **OpenVPN (SSL)**
+- Authentication Type: **Azure Certificate**
 
-Click Save.
+Click **Save**.
 
-This address pool will assign IP addresses to VPN clients connecting to the network.
+---
 
-
-#####################Step 7 — Generate VPN Client Configuration
-
-Once the P2S configuration is saved, download the VPN client package.
+### 7. Generate the VPN Client Configuration
 
 Navigate to:
 
@@ -113,54 +118,45 @@ Click:
 
 Download VPN Client
 
-This downloads a ZIP file containing:
+This downloads a configuration package containing:
 
-VPN client configuration
+- VPN client profile
+- certificates
+- connection configuration
 
-certificates
+---
 
-connection profile
+### 8. Install the VPN Client
 
-###########################Step 8 — Install VPN Client on Local Machine
-
-Install the OpenVPN client on the local computer.
+Install the **OpenVPN client** on the local machine.
 
 Steps:
 
-Extract the downloaded VPN client package
+1. Extract the downloaded VPN client package
+2. Locate the OpenVPN configuration file
+3. Import the configuration profile into the VPN client
 
-Locate the OpenVPN configuration file
+---
 
-Import the profile into the OpenVPN client
-
-This configures the local device to connect securely to the Azure VPN Gateway.
-
-#########################Step 9 — Connect to the VPN
+### 9. Establish VPN Connection
 
 Open the VPN client and initiate the connection.
 
 Once connected:
 
-The client receives an IP address from the 172.16.0.0/24 pool
+- The client receives an IP address from the **172.16.0.0/24 address pool**
+- The machine becomes logically connected to the **Azure Virtual Network**
 
-The machine becomes logically part of the Azure Virtual Network
+---
 
-######################Step 10 — Verify Connectivity
+### 10. Verify Connectivity
 
-To verify the VPN connection, run the following tests.
-
-Check Assigned VPN IP
-
-Run:
+Check the VPN adapter:
 
 ipconfig
-
-Look for the VPN adapter and confirm an IP address has been assigned.
-
-Test Connectivity to Azure Resources
-
-Example:
+Test connectivity to internal resources: 
 
 ping 10.1.1.4
 
-If successful, the remote client can now communicate securely with internal Azure resources.
+
+Successful responses confirm that the VPN connection is functioning correctly.
