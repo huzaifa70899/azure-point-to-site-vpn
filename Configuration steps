@@ -1,4 +1,4 @@
-##Step 1 — Create a Resource Group
+##############Step 1 — Create a Resource Group
 
 First, create a resource group to organize all resources related to the VPN lab.
 
@@ -13,7 +13,7 @@ Region: Canada Central
 
 Click Review + Create, then Create.
 
-##Step 2 — Create the Virtual Network
+###############Step 2 — Create the Virtual Network
 
 Next, create a Virtual Network that will host internal resources.
 
@@ -31,7 +31,7 @@ Subnet Address Range: 10.1.1.0/24
 
 Click Review + Create, then Create.
 
-##Step 3 — Create the Gateway Subnet
+################Step 3 — Create the Gateway Subnet
 
 A VPN Gateway requires a dedicated subnet called GatewaySubnet.
 
@@ -46,7 +46,7 @@ Address Range: 10.1.255.0/27
 
 Save the configuration.
 
-##Step 4 — Create a Public IP Address
+##################Step 4 — Create a Public IP Address
 
 The VPN Gateway requires a public IP address to allow remote connections.
 
@@ -61,7 +61,7 @@ SKU: Standard
 Assignment: Static
 Region: Canada Central
 
-##Step 5 — Deploy the VPN Gateway
+##################Step 5 — Deploy the VPN Gateway
 
 Now create the Azure VPN Gateway that will handle secure VPN connections.
 
@@ -82,7 +82,7 @@ Public IP Address: VPNGateway-PublicIP
 
 Click Review + Create, then Create.
 
-##Step 6 — Configure Point-to-Site VPN
+####################Step 6 — Configure Point-to-Site VPN
 
 After the VPN Gateway has been deployed, configure the Point-to-Site VPN settings.
 
@@ -101,7 +101,7 @@ Click Save.
 This address pool will assign IP addresses to VPN clients connecting to the network.
 
 
-##Step 7 — Generate VPN Client Configuration
+#####################Step 7 — Generate VPN Client Configuration
 
 Once the P2S configuration is saved, download the VPN client package.
 
@@ -121,7 +121,7 @@ certificates
 
 connection profile
 
-##Step 8 — Install VPN Client on Local Machine
+###########################Step 8 — Install VPN Client on Local Machine
 
 Install the OpenVPN client on the local computer.
 
@@ -135,7 +135,7 @@ Import the profile into the OpenVPN client
 
 This configures the local device to connect securely to the Azure VPN Gateway.
 
-##Step 9 — Connect to the VPN
+#########################Step 9 — Connect to the VPN
 
 Open the VPN client and initiate the connection.
 
@@ -145,7 +145,7 @@ The client receives an IP address from the 172.16.0.0/24 pool
 
 The machine becomes logically part of the Azure Virtual Network
 
-##Step 10 — Verify Connectivity
+######################Step 10 — Verify Connectivity
 
 To verify the VPN connection, run the following tests.
 
